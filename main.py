@@ -14,17 +14,17 @@ def index():
 
 @app.route('/',methods=['POST'])
 def calculate():
-    start_date = '2019-01-01'
-    end_date = '2019-04-01'
+    start_date = request.form['startdate']
+    end_date = request.form['enddate']
     data = request.form['data']
-    # geometry = request.form['polygon']
-    '''a = pygeoj.load(geometry)
+    '''geometry = request.form['polygon']
+    a = pygeoj.load(geometry)
     for feature in a:
         roi = (feature.geometry.coordinates)
-    region = ee.Geometry.MultiPolygon(roi)
-    '''
+        region = ee.Geometry.MultiPolygon(roi)
+        print(region)'''
     def ndvi(start_date,end_date):
-        image = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterDate('2019-01-01','2019-04-10').filterMetadata('CLOUD_COVER','less_than',20).median()
+        image = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA').filterDate(start_date,end_date).filterMetadata('CLOUD_COVER','less_than',20).median()
         print(image)
         nir = image.select('B5')
         red = image.select('B4')
@@ -32,6 +32,7 @@ def calculate():
         viz_parameter = {'min':-0.4,'max':0.5,'palette': ['blue','white','DarkGreen']}
         map_id_dict = ee.Image(ndvi).getMapId(viz_parameter)
         tile = str(map_id_dict['tile_fetcher'].url_format)
+        print(tile)
         return tile
     def dem():
             image = ee.Image("USGS/SRTMGL1_003")
@@ -73,8 +74,14 @@ def calculate():
             tile = str(map_id_dict['tile_fetcher'].url_format)
             print(tile)
             return tile 
-    def lulc():
-            pass
+    def forest():
+
+            forest_image = ee.Image("UMD/hansen/global_forest_change_2019_v1_7")
+            forest_visual = {'bands': ['loss', 'treecover2000', 'gain'],'max': [1, 255, 1]}
+            map_id_dict = ee.Image(forest_image).getMapId(forest_visual)
+    # forest loss as red, and forest gain as blue
+            tile = str(map_id_dict['tile_fetcher'].url_format)
+            return tile
 
     if (data == 'ndvi'):
         data1 = ndvi(start_date, end_date)
@@ -91,11 +98,11 @@ def calculate():
     elif(data == 'slope'):
         data1 = slope()
         return render_template('index.html',tiles = data1, title = 'SLOPE')
-    elif(data == 'lulc'):
-        data1 = lulc()
-        return render_template('index.html',tiles = data1, title = 'LULCisnotready')
+    elif(data == 'forest'):
+        data1 = forest()
+        return render_template('index.html',tiles = data1, title = 'Forest Change')
     else:
         data1=dem()
         return render_template('index.html',tiles=data1)
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run(debug=True)
