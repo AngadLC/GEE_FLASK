@@ -74,7 +74,7 @@ def calculate():
             print(tile)
             return tile 
     def lulc():
-            pass
+            return 'hi'
 
     if (data == 'ndvi'):
         data1 = ndvi(start_date, end_date)
@@ -98,4 +98,4 @@ def calculate():
         data1=dem()
         return render_template('index.html',tiles=data1)
 if __name__ == "__main__":
-    app.run(debug = True)
+    app.run()
