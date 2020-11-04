@@ -1,0 +1,10 @@
+{%  extends "index.html" %}
+{% block container %}
+    <div id="map" class="col-lg-9 mt-2">
+    </div>
+    <script>
+        var map = L.map('mapid').setView([28.2096, 83.9856], 10)
+        L.tileLayer("{{ tiles }}").addTo(map);
+        // console.log(map_data)
+    </script>
+{% endblock container %}

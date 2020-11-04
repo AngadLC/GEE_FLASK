@@ -21,7 +21,7 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-    <title>GEE-Flask</title>
+    <title>GEE{{title}}</title>
     <!-- custome css for the map element -->
     <style>
         #mapid {
@@ -66,15 +66,17 @@
                     <br>
                 </form>
             </div>
+            
             <!-- creating the div for the map element -->
-            <div id="mapid" class="col-lg-9 mt-2">
+                <div id="mapid" class="col-lg-9 mt-2">
 
-            </div>
+                </div>
+            
         </div>
     </div>
     <!-- adding js file for the leaflet map element -->
     <script>
-        var mymap = L.map('mapid').setView([28.2096, 83.9856], 12)
+        var mymap = L.map('mapid').setView([28.194081, 84.176445], 11);
         // adding the tile layer
         L.tileLayer('https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=gAWMvq9FjPXEk2IN9TQf', {
             tileSize: 512,
@@ -83,9 +85,12 @@
             attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
             crossOrigin: true
         }).addTo(mymap);
-        L.tileLayer("{{ tiles }}").addTo(mymap);
-        // console.log(map_data)
+        var map_data = L.tileLayer(`{{ tiles }}`).addTo(mymap)
+        console.log(`{{tiles}}`)
     </script>
+    <div>
+         <!-- <h1>{{tiles}}Hi </h1> -->
+    </div>
 </body>
 
 </html>
