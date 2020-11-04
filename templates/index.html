@@ -46,7 +46,7 @@
                             <option value="ndwi">NDWI</option>
                             <option value="dem">DEM</option>
                             <option value="slope">Slope</option>
-                            <option value="lulc">Land Use Land cover</option>
+                            <option value="forest">Forest Change</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -58,7 +58,7 @@
                         <input type="date" class="form-control" name="enddate" value="2020-10-03" min="1997-01-01">
                     </div>
                     <div class="form-group">
-                        <label for="geojson">Upload Geojson File</label>
+                        <label for="polygon">Upload Geojson File</label>
                         <input name="polygon" type="file" class="form-control-file">
                     </div>
                     <br><br>
@@ -72,6 +72,15 @@
 
                 </div>
             
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="text-danger text-center text-uppercase">
+                Thing to remember</h1>
+            <p class="text-danger text-center">If the Map Data is not shown in your specific area please change the date because 
+                cloud cover may be greater than 10% at that time
+            </p>
         </div>
     </div>
     <!-- adding js file for the leaflet map element -->
